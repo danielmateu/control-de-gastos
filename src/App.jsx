@@ -20,15 +20,15 @@ function App() {
   const [gastoEditar, setGastoEditar] = useState({})
 
   useEffect(() => {
-    if(Object.keys(gastoEditar).length > 0){
-    setModal(true);
+    if (Object.keys(gastoEditar).length > 0) {
+      setModal(true);
 
-    setTimeout(() => {
-      setAnimarModal(true)
-    }, 500)
-  }
+      setTimeout(() => {
+        setAnimarModal(true)
+      }, 500)
+    }
   }, [gastoEditar])
-  
+
 
 
   const handleNuevoGasto = () => {
@@ -41,12 +41,20 @@ function App() {
   }
 
   const guardarGasto = gasto => {
-    gasto.id = generarID();
-    gasto.fecha = Date.now();
-    setGastos([...gastos, gasto]);
+    
+    if (gasto.id) {
+      // actualizar
+      const gastosActualizados = gastos.map( gastoState => gastoState.id === gasto.id ? gasto : gastoState );
+
+      setGastos(gastosActualizados);
+    } else {
+      //Nuevo Gasto
+      gasto.id = generarID();
+      gasto.fecha = Date.now();
+      setGastos([...gastos, gasto]);
+    }
 
     setAnimarModal(false)
-
     setTimeout(() => {
       setModal(false)
 
@@ -54,13 +62,13 @@ function App() {
   }
 
   return (
-    <div className  = { modal ? 'fijar' : '' }>
+    <div className={modal ? 'fijar' : ''}>
       <Header
-        gastos      = {gastos}
-        presupuesto ={presupuesto}
-        setPresupuesto        ={setPresupuesto}
-        isValidPresupuesto    ={isValidPresupuesto}
-        setIsValidPresupuesto ={setIsValidPresupuesto}
+        gastos={gastos}
+        presupuesto={presupuesto}
+        setPresupuesto={setPresupuesto}
+        isValidPresupuesto={isValidPresupuesto}
+        setIsValidPresupuesto={setIsValidPresupuesto}
       />
 
       {
@@ -68,8 +76,8 @@ function App() {
           <>
             <main>
               <ListadoGastos
-                gastos = {gastos}
-                setGastoEditar = {setGastoEditar}
+                gastos={gastos}
+                setGastoEditar={setGastoEditar}
               />
             </main>
             <div className="nuevo-gasto">
@@ -88,7 +96,7 @@ function App() {
           animarModal={animarModal}
           setAnimarModal={setAnimarModal}
           guardarGasto={guardarGasto}
-          gastoEditar = {gastoEditar}
+          gastoEditar={gastoEditar}
         />
       }
 
