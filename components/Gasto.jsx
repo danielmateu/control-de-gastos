@@ -26,9 +26,6 @@ export const Gasto = ({gasto}) => {
         <div className="gasto sombra">
             <div className="contenido-gasto">
                 <img src={diccionarioIconos[categoria]} alt="Icono Gasto" 
-                
-                
-                
                 />
                 <div className="descripcion-gasto">
                     <p className="categoria">{categoria}</p>
